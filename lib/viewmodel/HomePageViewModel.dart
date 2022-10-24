@@ -1,5 +1,0 @@
-class HomePageViewModel {
-
-  void fetchPokemonD
-
-}
