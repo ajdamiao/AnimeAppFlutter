@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon/Data/anime_service.dart';
+import 'package:pokemon/viewmodel/home_view_model.dart';
 
 import '../model/Anime.dart';
 
 class HomePage extends StatelessWidget {
   final AnimeService animeService = AnimeService();
+  final HomeViewModel homeViewModel = HomeViewModel();
   HomePage({Key? key}) : super(key: key);
 
   void _showAnimeInfo(BuildContext context, Anime anime) {
@@ -64,7 +66,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(title: Text("Anime"), backgroundColor: Colors.red,),
       body: FutureBuilder<List<Anime>>(
-        future: animeService.getAnimes(),
+        future: homeViewModel.getAnimeList(),
         builder: (context, snapshot) {
           if(snapshot.hasData) {
             return GridView.builder(gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -95,7 +97,11 @@ class HomePage extends StatelessWidget {
                   );
                 });
           } else {
-            return const CircularProgressIndicator();
+            return Scaffold(
+              body: Center(
+                  child: CircularProgressIndicator(),
+              ),
+            );
           }
         },
       ),
